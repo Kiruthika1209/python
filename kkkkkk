@@ -1,0 +1,43 @@
+# Import libraries
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# Load the Iris dataset
+iris = load_iris()
+X = pd.DataFrame(iris.data, columns=iris.feature_names)
+y = iris.target
+
+# Train-test split (80% training, 20% testing)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# -----------------------
+# 1️⃣ Decision Tree Model
+# -----------------------
+dt_model = DecisionTreeClassifier()
+dt_model.fit(X_train, y_train)
+
+# Predictions
+dt_pred = dt_model.predict(X_test)
+
+# Accuracy
+dt_accuracy = accuracy_score(y_test, dt_pred)
+print("Decision Tree Accuracy:", dt_accuracy)
+
+# -------------------------------
+# 2️⃣ Logistic Regression Model
+# -------------------------------
+lr_model = LogisticRegression(max_iter=200)
+lr_model.fit(X_train, y_train)
+
+# Predictions
+lr_pred = lr_model.predict(X_test)
+
+# Accuracy
+lr_accuracy = accuracy_score(y_test, lr_pred)
+print("Logistic Regression Accuracy:", lr_accuracy)
